@@ -1,5 +1,14 @@
 # type command prints file contents
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 def _help():
@@ -13,7 +22,7 @@ vars to use value as file
 name.
 
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -36,9 +45,9 @@ def main(argv):
     if os.path.isfile(path):
         with open(path) as f:
             data = f.readlines()
-        print('_________________<START>_________________\n')
-        print(make_s2(data))
-        print('__________________<END>__________________\n')
+        talk('START\n')
+        talk(make_s2(data))
+        talk('END\n')
         return
     elif os.path.isdir(path):
         err(3, add=argv + ' is a directory')
