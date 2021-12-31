@@ -74,12 +74,12 @@ def main(argv):
             try:
                 e = eval(i)
                 if e != None:
-                    print(e)
+                    talk(e)
             except SyntaxError:
                 try:
                     exec(i)
                 except SyntaxError as e:
-                    print(e)
+                    talk(e)
                     return
             except NameError as e:
                 err(0, i)
