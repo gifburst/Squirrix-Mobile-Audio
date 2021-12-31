@@ -1,6 +1,16 @@
 # lcom command listing utility
 
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 
 def _help():
@@ -11,7 +21,7 @@ def _help():
               along with hidden ones.
 -s (char)     Print commands starting
               with (char).'''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -42,10 +52,10 @@ def main(argv):
             arg = argv[0]
             if arg.isupper():
                 arg = arg.lower()
-            print('Section:', arg.upper())
+            talk('Section:', arg.upper())
             for i in f:
                 if i[0] == arg:
-                    print('    ==>', i)
+                    talk(i)
             return
         except IndexError:
             _help()
@@ -55,5 +65,5 @@ def main(argv):
     for i in f:
         if i[0] != last:
             last = i[0]
-            print('Section:', last.upper())
-        print('    -->', i)
+            talk('Section:', last.upper())
+        talk(i)
