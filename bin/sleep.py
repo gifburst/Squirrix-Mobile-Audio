@@ -3,6 +3,16 @@ from time import sleep
 
 from lib.utils import *
 
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 def _help():
     usage = '''
@@ -13,7 +23,7 @@ in seconds
 
 -h            Print this help
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -29,4 +39,4 @@ def main(argv):
         t = int(make_s(argv))
         sleep(t)
     except ValueError:
-        print('"', make_s(argv), '" is not a valid time interval', sep='')
+        talk('"', make_s(argv), '" is not a valid time interval', sep='')
