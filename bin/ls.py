@@ -1,5 +1,14 @@
 # ls command
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 def _help():
@@ -15,7 +24,7 @@ Usage: ls [options] [dir]
 
 Use '%' in front of global vars
 to use this value as for name.'''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -71,10 +80,10 @@ def pprint(path):
         err(2, path)
         return
     if l == []:
-        print('Empty directory')
+        talk('Empty directory')
         return
     for i in sorted(l):
-        print(i)
+        talk(i)
 
 
 def pprint2(path):
@@ -84,9 +93,9 @@ def pprint2(path):
         err(2, path)
         return
     if l == []:
-        print('Empty directory')
+        talk('Empty directory')
         return
     for i in sorted(l):
         if i[0] == '.':
             continue
-        print(i)
+        talk(i)
