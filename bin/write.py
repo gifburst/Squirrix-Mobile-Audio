@@ -1,5 +1,14 @@
 # write function
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 def _help():
@@ -23,7 +32,7 @@ While in write mode use
 "-exit" to exit write mode
 "-show" to see file contents
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -49,7 +58,7 @@ def main(argv):
         try:
             with open(path, 'w') as f:
                 pass
-            print('Writing over "', make_s(argv), '" file', sep='')
+            talk('Writing over "', make_s(argv), '" file', sep='')
         except IOError:
             err(3, add='Cant write into a directory')
             return
@@ -75,6 +84,6 @@ def main(argv):
 def _show(path):
     with open(path) as f:
         data = f.readlines()
-    print('_________________<START>_________________\n')
-    print(make_s2(data))
-    print('__________________<END>__________________\n')
+    talk('START\n')
+    talk(make_s2(data))
+    talk('END\n')
