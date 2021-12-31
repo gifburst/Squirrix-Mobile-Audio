@@ -9,8 +9,8 @@ def talk(text):
     engine.runAndWait()
 
 def main():
-    talk("")
-    talk("Squirrix Mobile Version 0.1")
-    talk("Copyright (c) 2021 Squirrel Computers")
-    talk("")
-    talk("")
+    talk('')
+    talk('Squirrix Mobile Version 0.1')
+    talk('Copyright (c) 2021 Squirrel Computers')
+    talk('')
+    talk('')
