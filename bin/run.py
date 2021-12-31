@@ -3,6 +3,17 @@ from importlib import import_module as _import
 
 from lib.utils import *
 
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
+
 
 def _help():
     usage = '''
@@ -13,7 +24,7 @@ script file
 
 -h            Print this help
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -73,10 +84,10 @@ def main(argv):
             except NameError as e:
                 err(0, i)
             except ZeroDivisionError:
-                print('Cannot divide by zero')
+                talk('Cannot divide by zero')
             except TypeError as e:
-                print(e)
+                talk(e)
             except ValueError as e:
-                print(e)
+                talk(e)
             except AttributeError as e:
-                print(e)
+                talk(e)
