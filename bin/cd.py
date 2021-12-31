@@ -1,5 +1,15 @@
 # cd change directory command
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 
 def _help():
@@ -17,7 +27,7 @@ use -cur as argument
 to JUST print the
 current path.
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -44,7 +54,7 @@ def main(argv):
 
     if './' in argv:
         if get_path() == 'root/':
-            print('Already in root/')
+            talk('Already in root/')
             return
         path = 'root/'
         goto(path)
