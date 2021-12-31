@@ -1,5 +1,14 @@
 # test lock shell
 from lib.pwd import chpwd, lock
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 def _help():
@@ -9,7 +18,7 @@ Usage: lock [options]
 -h            Print this help
 -chpass       Change password
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
