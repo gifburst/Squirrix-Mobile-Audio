@@ -1,5 +1,15 @@
 # move command to move files only
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 
 def _help():
@@ -12,7 +22,7 @@ are valid paths.
 use '%' in front of global
 vars to  use  their values.
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -38,7 +48,7 @@ def main(argv):
     if os.path.isfile(_to):
         err(2, add='cant move into a file')
         return
-    # print(_from,_to)
+    # talk(_from,_to)
     try:
         with open(_from) as f:
             data = f.readlines()
@@ -48,7 +58,7 @@ def main(argv):
 
     try:
         with open(_to + '/' + os.path.basename(args[0]), 'w') as f:
-            [print(i, file=f) for i in data]
+            [talk(i, file=f) for i in data]
     except IOError:
         err(2, add='"' + os.path.basename(_from) + '" could not be moved')
         return
