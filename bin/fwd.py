@@ -1,5 +1,15 @@
 # forward commands to the host system
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 
 def _help():
@@ -9,7 +19,7 @@ Usage: fwd (command)
 Where command is a valid
 host system command.
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
