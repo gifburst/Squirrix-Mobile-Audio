@@ -2,7 +2,17 @@
 # Password routines
 import getpass
 import hashlib
+import pyttsx3
 from time import sleep
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 key = 'lib/lock.key'
 
@@ -12,7 +22,7 @@ def chpwd():
 Unlock the shell to prove authenticity.'''
     print(p)
     lock()
-    print('Authenticity Proved...')
+    talk('Authenticity Proved...')
     sleep(1)
     _reg_pass()
 
@@ -27,7 +37,7 @@ def lock():
         if inp in data:
             return
         else:
-            print('\nIncorrect password !')
+            talk('\nIncorrect password !')
             lock()
     except IOError:
         p = '''
@@ -36,7 +46,7 @@ Enter Password to register.
 '''
         print(p)
         _reg_pass()
-        print('Now locking the shell...\n')
+        talk('Now locking the shell...\n')
         lock()
 
 
@@ -45,11 +55,11 @@ def _reg_pass():
 You wont be able to see what
 you are typing.
 '''
-    print(p)
+    talk(p)
     _pass = get_pass()
     with open(key, 'w') as kw:
-        print(_pass, sep='\n', file=kw)
-    print('\nPassword was registered...')
+        talk(_pass, sep='\n', file=kw)
+    talk('\nPassword was registered...')
 
 
 def get_pass():
@@ -57,14 +67,14 @@ def get_pass():
     if len(new_password) < 4:
         p = '''Password must be atleast 4 characters long...
 '''
-        print(p)
+        talk(p)
         return get_pass()
     confirm_password = getpass.getpass('Confirm Password: ')
     if new_password == confirm_password:
         pass_key = get_hash(new_password)
         return pass_key
     else:
-        print("Passwords entered doesn't match...")
+        talk("Passwords entered doesn't match...")
         return get_pass()
 
 
