@@ -339,11 +339,11 @@ def analyze(inp):
             d.remove('__doc__')
             d.remove('inp')
             for i in sorted(d):
-                print(i)
+                talk(i)
             return
         e = eval(inp)
         if e != None:
-            print(e)
+            talk(e)
     except SyntaxError:
         talk("Couldn\'t evaluate the expression")
     except NameError as e:
