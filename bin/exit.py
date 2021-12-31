@@ -4,6 +4,16 @@ from time import sleep
 
 from lib.utils import prop, set_path
 from lib.vfs import cleanup
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 
 def _help():
@@ -30,19 +40,19 @@ def main(argv):
             t = int(argv[i])
             die(t)
         except ValueError:
-            print('"', argv[i], '" is not a valid time interval...', sep='')
-            print('Exiting with default time...')
+            talk('"', argv[i], '" is not a valid time interval...', sep='')
+            talk('Exiting with default time...')
         except IndexError:
-            print('You forgot to give the time...')
-            print('Exiting with default time...')
+            talk('You forgot to give the time...')
+            talk('Exiting with default time...')
     die()
 
 
 def die(t=2):
-    print('Stopping Squirrix Mobile...')
+    talk('Stopping Squirrix Mobile...')
     sleep(1)
-    print('Closed Everything...')
-    print('will exit in', t, 'seconds...')
+    talk('Closed Everything...')
+    talk('will exit in', t, 'seconds...')
     sleep(t)
     if prop.get('save_state') == '0':
         set_path('root/')
