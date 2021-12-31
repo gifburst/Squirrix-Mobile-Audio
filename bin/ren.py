@@ -1,5 +1,14 @@
 # ren rename command
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 def _help():
@@ -11,7 +20,7 @@ Usage: ren (old) (new)
 
 -h            Print this help
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
