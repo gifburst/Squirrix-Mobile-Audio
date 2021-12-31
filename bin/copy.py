@@ -1,5 +1,15 @@
 # copy command to copy files only
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 
 def _help():
@@ -13,7 +23,7 @@ Use '%' in front of
 global vars to use
 their values.
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -39,7 +49,7 @@ def main(argv):
     if os.path.isfile(_to):
         err(2, add='cant move into a file')
         return
-    # print(_from,_to)
+    # talk(_from,_to)
     try:
         with open(_from) as f:
             data = f.readlines()
