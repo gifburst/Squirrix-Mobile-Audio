@@ -1,4 +1,14 @@
 # Help function
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 u = '''
 [help]
@@ -48,15 +58,15 @@ def main(argv):
     # shell doesnt send the
     # comm name anymore
     if '-h' in argv:
-        print(h)
+        talk(h)
         return
     if '-v' in argv:
-        print(v)
+        talk(v)
         return
     if '-i' in argv:
-        print(i)
+        talk(i)
         return
     if '-help' in argv:
-        print(u)
+        talk(u)
         return
-    print(i, u, v)
+    talk(i, u, v)
