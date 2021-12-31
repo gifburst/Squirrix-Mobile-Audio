@@ -4,7 +4,15 @@ from time import sleep
 
 from lib.utils import *
 from lib.vfs import init
+import pyttsx3
 
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 class shell():
     def __init__(self):
@@ -54,21 +62,16 @@ class shell():
             analyze(f)
 
     def start(self):
-        print("""  ____              _           _      
- / ___|  __ _ _   _(_)_ __ _ __(_)_  __
- \___ \ / _` | | | | | '__| '__| \ \/ /
-  ___) | (_| | |_| | | |  | |  | |>  < 
- |____/ \__, |\__,_|_|_|  |_|  |_/_/\_\
-
-           |_|                   Mobile""")
+        print('Squirrix Mobile')
+        talk('Squirrix Mobile')
         # write config file
         write_config()
         sleep(1)
-        print('Copyright (c) Squirrel Computers 2021\n')
+        talk('Copyright (c) Squirrel Computers 2021\n')
         sleep (2)
-        print('Starting Squirrix Mobile\n')
+        talk('Starting Squirrix Mobile\n')
         sleep(0.5)
-        print('Type "help" for help or type "lcom" to list every command...\n')
+        talk('Type "help" for help or type "lcom" to list every command...\n')
         while True:
             inp = self.get_input()
             self.execute(inp)
