@@ -1,5 +1,14 @@
 # echo function
 from lib.utils import make_s, prop
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 def _help():
@@ -18,7 +27,7 @@ only that var with value.
 eg. echo Value of prompt is %prompt
 will echo value of prompt
 '''
-    print(usage)
+    talk(usage)
 
 
 def main(argv):
@@ -61,4 +70,4 @@ def main(argv):
     if '\\n' in s:
         s = s.replace('\\n', '\n')
 
-    print(s)
+    talk(s)
