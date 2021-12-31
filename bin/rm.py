@@ -1,6 +1,15 @@
 # rm remove/delete command
 
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 def main(argv):
@@ -33,9 +42,9 @@ def main(argv):
         except OSError:
             err(2, add=argv[0] + ' could not be deleted')
             return
-        print('"', argv[0], '" directory has been deleted', sep='')
+        talk('"', argv[0], '" directory has been deleted', sep='')
         return
-    print('"', argv[0], '" file has been deleted', sep='')
+    talk('"', argv[0], '" file has been deleted', sep='')
 
 
 def _help():
@@ -46,4 +55,4 @@ Where [(dir)/(file)]
     directory/file to be
     removed/deleted.
 '''
-    print(usage)
+    talk(usage)
