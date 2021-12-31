@@ -2,6 +2,15 @@
 
 import configparser as cp
 import os
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
 
 
 # String manipulators____________________
@@ -35,47 +44,47 @@ def err(n, inp=None, add=None):
     # shell error
     if n == 0:
         if inp != None:
-            print('Error[0]: "', inp, '" was not recognised as a command or an expression', sep='')
+            talk('Error[0]: "', inp, '" was not recognised as a command or an expression', sep='')
         elif add != None:
-            print('Error[0]:', add)
+            talk('Error[0]:', add)
         else:
-            print('Error[0]: invalid command or expression')
+            talk('Error[0]: invalid command or expression')
         return
     # shell error
     elif n == 1:
         if inp != None:
-            print('Error[1]: "', inp, '" command could not be executed', sep='')
+            talk('Error[1]: "', inp, '" command could not be executed', sep='')
         elif add != None:
-            print('Error[1]:', add)
+            talk('Error[1]:', add)
         else:
-            print('Error[1]: command was not executed')
+            talk('Error[1]: command was not executed')
         return
     # path error
     elif n == 2:
         if inp != None:
-            print('Error[2]: "', inp, '" path does not exist', sep='')
+            talk('Error[2]: "', inp, '" path does not exist', sep='')
         elif add != None:
-            print('Error[2]:', add)
+            talk('Error[2]:', add)
         else:
-            print('Error[2]: invalid path')
+            talk('Error[2]: invalid path')
         return
     # read write error
     elif n == 3:
         if inp != None:
-            print('Error[3]: "', inp, '" could not be opened', sep='')
+            talk('Error[3]: "', inp, '" could not be opened', sep='')
         elif add != None:
-            print('Error[3]:', add)
+            talk('Error[3]:', add)
         else:
-            print('Error[3]: file could not be read')
+            talk('Error[3]: file could not be read')
         return
     # Errors for set command
     elif n == 4:
         if inp != None:
-            print('Error[4]: undefined variable "', inp, '"', sep='')
+            talk('Error[4]: undefined variable "', inp, '"', sep='')
         elif add != None:
-            print('Error[4]:', add)
+            talk('Error[4]:', add)
         else:
-            print('Error[4]: undefined variable')
+            talk('Error[4]: undefined variable')
         return
     # prototype declaration
     elif n == 5:
@@ -87,7 +96,7 @@ def err(n, inp=None, add=None):
             pass
         return
     else:
-        print('Invalid Error code')
+        talk('Invalid Error code')
 
 
 # Manager functions______________________
@@ -172,7 +181,7 @@ def replace_vars(argv):
         var = argv[i]
         v = var.replace(c_char, '')
         if c_char in var and v in prop.vars():
-            # print(i, var, v)
+            # talk(i, var, v)
             argv.pop(i)
             argv.insert(i, prop.get(v))
     return argv
@@ -267,13 +276,13 @@ def get_args(inp):
         old = inp[0].replace(' ', '')
         old = inp[0].replace('"', '')
     except IndexError:
-        print('1st argument is missing')
+        talk('1st argument is missing')
         return []
     try:
         new = inp[1].replace(' ', '')
         new = inp[1].replace('"', '')
     except IndexError:
-        print('2nd argument is missing')
+        talk('2nd argument is missing')
         return []
     return [old, new]
 
@@ -284,7 +293,7 @@ def isValid(inp):
     with open(exceptsFile) as exc:
         excepts = exc.readlines()
     for i in excepts:
-        # print(r'%s'%i)
+        # talk(r'%s'%i)
         if i[:-1] in inp:
             return True
     return False
@@ -305,10 +314,10 @@ def analyze(inp):
         if '.' in inp:
             err(0, inp)
             return
-        print('"', inp, '" is a directory', sep='')
+        talk('"', inp, '" is a directory', sep='')
         return
     elif os.path.isfile(get_path() + inp):
-        print('"', inp, '" is a file', sep='')
+        talk('"', inp, '" is a file', sep='')
         return
     # check if is a valid input
     if isValid(inp) or 'inp' in inp:
@@ -320,7 +329,7 @@ def analyze(inp):
         # math func inp catcher
         # to prevent builtins msg disp
         if inp in dir():
-            print('"', inp, '" is a mathematical function', sep='')
+            talk('"', inp, '" is a mathematical function', sep='')
             return
         # add true and false
         exec('true,false=True,False')
@@ -336,14 +345,14 @@ def analyze(inp):
         if e != None:
             print(e)
     except SyntaxError:
-        print("Couldn\'t evaluate the expression")
+        talk("Couldn\'t evaluate the expression")
     except NameError as e:
         err(0, inp)
     except ZeroDivisionError:
-        print('Cannot divide by zero')
+        talk('Cannot divide by zero')
     except TypeError as e:
-        print(e)
+        talk(e)
     except ValueError as e:
-        print(e)
+        talk(e)
     except AttributeError as e:
-        print(e)
+        talk(e)
