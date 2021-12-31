@@ -1,6 +1,16 @@
 # mkdir command
 
 from lib.utils import *
+import pyttsx3
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
 
 
 def main(argv):
@@ -32,10 +42,10 @@ def main(argv):
     try:
         os.mkdir(path)
     except OSError:
-        print('"', argv[0], '" directory already exsists', sep='')
+        talk('"', argv[0], '" directory already exsists', sep='')
         return
-    print('"', argv[0], '" directory created', sep='')
-    # print('Path:',path)
+    talk('"', argv[0], '" directory created', sep='')
+    # talk('Path:',path)
 
 
 def _help():
@@ -50,4 +60,4 @@ Use '%' in front of
 global vars to use
 their value as dir name.
 '''
-    print(usage)
+    talk(usage)
